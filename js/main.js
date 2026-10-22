@@ -28,6 +28,57 @@
   }, { threshold: 0.12 });
   $$(".reveal").forEach((el) => io.observe(el));
 
+  /* ---------- Animated headings, illustrations ---------- */
+  const A = window.ART || {};
+  function splitWords(el) {
+    const text = el.textContent.trim().replace(/\s+/g, " ");
+    el.setAttribute("aria-label", text);
+    el.textContent = "";
+    text.split(" ").forEach((w, i, arr) => {
+      const s = document.createElement("span");
+      s.className = "word";
+      s.style.setProperty("--i", i);
+      s.setAttribute("aria-hidden", "true");
+      s.textContent = w;
+      el.appendChild(s);
+      if (i < arr.length - 1) el.appendChild(document.createTextNode(" "));
+    });
+    const u = document.createElement("i");
+    u.className = "uline";
+    u.setAttribute("aria-hidden", "true");
+    el.insertAdjacentElement("afterend", u);
+  }
+  $$(".page-hero h1, .reveal h2").forEach(splitWords);
+
+  // Illustration sets for the inner-page headers (slot order: big, bottom, top, small, ribbon)
+  const HERO_SETS = {
+    about:     ["book", "stack", "cap", "pencil", "bookmark"],
+    programs:  ["book", "trophy", "magnifier", "star", "bookmark"],
+    calendar:  ["calendar", "clock", "pencil", "star", "bookmark"],
+    resources: ["folder", "stack", "doc", "pencil", "bookmark"],
+    gallery:   ["camera", "photo", "star", "pencil", "bookmark"],
+    contact:   ["envelope", "pin", "book", "star", "bookmark"]
+  };
+  const ph = $(".page-hero");
+  const set = HERO_SETS[document.body.dataset.page];
+  if (ph && set) {
+    const wrap = document.createElement("div");
+    wrap.className = "hero-art";
+    wrap.setAttribute("aria-hidden", "true");
+    wrap.innerHTML = '<span class="orb a"></span><span class="orb b"></span>' +
+      set.map((k, i) => `<span class="art s${i + 1}">${A[k] || ""}</span>`).join("") +
+      [["34%", "58%", 18, 0, 3], ["8%", "62%", 14, 1, 3.6], ["46%", "22%", 12, 1.8, 4], ["22%", "48%", 10, .6, 3.2]]
+        .map(([r, t, z, d, tt]) => `<span class="spark" style="right:${r};top:${t};width:${z}px;height:${z}px;--d:${d}s;--t:${tt}s">${A.spark}</span>`).join("");
+    ph.prepend(wrap);
+  }
+
+  // Corner illustrations inside sections: <span class="deco tr" data-art="book">
+  $$("[data-art]").forEach((el) => {
+    el.innerHTML = A[el.dataset.art] || "";
+    el.setAttribute("aria-hidden", "true");
+    if (reduceMotion) el.classList.add("in"); else io.observe(el);
+  });
+
   /* ---------- Image helper with fallback ---------- */
   function makeImg(id, w, alt) {
     const img = new Image();
