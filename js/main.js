@@ -235,6 +235,38 @@
     $$(".reveal", rs).forEach((el) => io.observe(el));
   }
 
+
+  /* ---------- Hero card: Book of the Week ---------- */
+  const hc = $("#heroCard");
+  if (hc && typeof BOOKS !== "undefined" && BOOKS.length) {
+    const weekNo = (d) => {
+      const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const day = t.getUTCDay() || 7;
+      t.setUTCDate(t.getUTCDate() + 4 - day);
+      const y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+      return Math.ceil(((t - y0) / 86400000 + 1) / 7);
+    };
+    const wk = weekNo(new Date());
+    let idx = wk % BOOKS.length;
+    const render = (animate) => {
+      const b = BOOKS[idx];
+      $("#bwTitle").textContent = b.title;
+      $("#bwAuthor").textContent = b.author;
+      $("#bwBlurb").textContent = b.blurb;
+      $("#bwTags").innerHTML = (b.tags || []).map((t) => `<span>${t}</span>`).join("");
+      $("#bwCoverTitle").textContent = b.title;
+      $("#bwCoverIcon").textContent = b.icon || "📘";
+      $("#bwCover").style.background = `linear-gradient(135deg, ${b.color}, #14213d)`;
+      $("#bwWeek").textContent = idx === wk % BOOKS.length ? "Week " + wk : "Browsing";
+      if (animate && !reduceMotion) {
+        $$(".bw-body, .bw-blurb", hc).forEach((el) => { el.classList.remove("bw-swap"); void el.offsetWidth; el.classList.add("bw-swap"); });
+      }
+    };
+    $("#bwPrev").addEventListener("click", () => { idx = (idx - 1 + BOOKS.length) % BOOKS.length; render(true); });
+    $("#bwNext").addEventListener("click", () => { idx = (idx + 1) % BOOKS.length; render(true); });
+    render(false);
+  }
+
   /* ---------- Year ---------- */
   $$(".year").forEach((y) => (y.textContent = new Date().getFullYear()));
 })();

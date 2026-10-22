@@ -101,3 +101,25 @@ const RESOURCES = [
   {type:"doc",title:"Calendar of Library Activities SY 2026–2027",desc:"Month-by-month and week-by-week schedule of orientations, Reading Month and more.",
    url:"https://drive.google.com/file/d/19vDkUHxcZnD6b7VgGiSmzi9SK60RdWsv/view"}
 ];
+
+/* ============================================================
+   BOOK OF THE WEEK (home page card)
+   The card shows one book per calendar week and rotates through
+   this list automatically. Replace these with the library's own
+   weekly picks: add or remove entries freely.
+   color = cover color, icon = emoji on the cover, tags = small labels.
+   The first three entries come from the library brochure
+   (Nancy Drew, Hardy Boys, and Binisaya story books).
+   ============================================================ */
+const BOOKS = [
+  {title:"Nancy Drew Mysteries", author:"Carolyn Keene", color:"#0f766e", icon:"🔍", tags:["English","Mystery","Grades 5–6"],
+   blurb:"Join teen detective Nancy Drew as she follows clues and solves puzzling cases. A favorite among our young-reader novels."},
+  {title:"The Hardy Boys", author:"Franklin W. Dixon", color:"#b45309", icon:"🕵️", tags:["English","Adventure","Grades 5–6"],
+   blurb:"Brothers Frank and Joe Hardy chase thrilling mysteries in this classic adventure series from our young-reader shelves."},
+  {title:"Sinugboanong Binisaya Story Books", author:"Our local-language collection", color:"#7c3aed", icon:"🌴", tags:["Binisaya","Storybooks","Kinder–Grade 6"],
+   blurb:"Stories in our own language. Read them aloud, retell them, and share them with your buddy reader."},
+  {title:"Filipino Story Books", author:"Our Filipino collection", color:"#be123c", icon:"🇵🇭", tags:["Filipino","Storybooks","Kinder–Grade 6"],
+   blurb:"Alamat, kuwento at iba pa. Pumili ng paboritong kuwento sa istante at ibahagi ito sa klase."},
+  {title:"Encyclopedias & Dictionaries", author:"Reference section", color:"#1d4ed8", icon:"📚", tags:["Reference","Book Detective","Grades 2–6"],
+   blurb:"Ready for a Book Detective mission? Look up a fact, find a word, and discover something new."}
+];
