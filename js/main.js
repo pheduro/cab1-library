@@ -144,10 +144,10 @@
       const tick = () => {
         const word = words[w];
         typed.textContent = word.slice(0, c);
-        if (!del && c === word.length) { del = true; return setTimeout(tick, 1400); }
-        if (del && c === 0) { del = false; w = (w + 1) % words.length; }
+        if (!del && c === word.length) { del = true; return setTimeout(tick, 3000); }
+        if (del && c === 0) { del = false; w = (w + 1) % words.length; return setTimeout(tick, 700); }
         c += del ? -1 : 1;
-        setTimeout(tick, del ? 55 : 110);
+        setTimeout(tick, del ? 90 : 170);
       };
       tick();
     }
